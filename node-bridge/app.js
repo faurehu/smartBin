@@ -11,10 +11,6 @@ function pingServer(){
   });
 }
 
-var API_ID     = config.API_ID,
-    API_SECRET = config.API_SECRET,
-    BOARD_ID   = 'J5ZXPIWO7S';
-
 var settings = {
   keepalive: 1000,
   protocolId: 'MQIsdp',
@@ -38,12 +34,13 @@ client.on('connect', function() {
   console.log('connected to mqtt server');
 
   // Sample code for subscribe a specific topic.
-  client.subscribe(API_ID+'/'+BOARD_ID+'/SENSE/1');
+  client.subscribe(config.api_id+'/'+config.board_id+'/SENSE/1');
 
   // Attach a function when a new message is received.
   client.on('message', function(topic, message) {
-    console.log(message.toString());
-    if (message.dig == 1){ 
+    var dig_in = JSON.parse(message).dig;
+    if (dig_in == 1){ 
+      console.log('pinging server');
       pingServer();
     }
   });
