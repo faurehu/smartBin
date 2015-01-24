@@ -1,0 +1,14 @@
+{
+  "name": "node-bridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "iain",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^0.3.13"
+  }
+}
