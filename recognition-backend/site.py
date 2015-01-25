@@ -12,8 +12,11 @@ def process_image(image):
 	opencv_img = img.create_opencv_image_from_stringio(image)
 	if (opencv_img is None):
 		return ':('
-	face = detector.detect_face(opencv_img)
-	return face
+	lastUserId, lastUserName = detector.detect_face(opencv_img)
+	return (lastUserId, lastUserName)
+
+lastUserName = ''
+lastUserId = 0
 
 def app(environ, start_response):
 	try:
@@ -21,12 +24,16 @@ def app(environ, start_response):
 	except (ValueError):
 		request_body_size = 0
 
-	print 'req size: %d' % request_body_size
+	resp = ''
 
-	request_body = environ['wsgi.input'].read(request_body_size)
-
-	resp = process_image(cStringIO.StringIO(request_body))
-
+	if (request_body_size == 0 and environ.get('PATH_INFO') == '/lastuser'):
+		resp = json.dumps({'user_name': lastUserName, 'user_id': lastUserId})
+	else:
+		print 'req size: %d' % request_body_size
+		request_body = environ['wsgi.input'].read(request_body_size)
+		user_name, user_id = process_image(cStringIO.StringIO(request_body))
+		resp = user_name
+	
 	data = "%s" % resp
 
 	start_response("200 OK", [

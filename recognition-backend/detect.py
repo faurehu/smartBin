@@ -19,7 +19,7 @@ class Detector:
 			small_img = cv2.equalizeHist(small_img)
 			if show: cv2.imshow('test', small_img)
 			uid, conf = self.model.predict(small_img)
-			return str(db.DB().query('SELECT name from users WHERE id = %s' % uid).fetchone()[0])
+			return db.DB().query('SELECT name, id from users WHERE id = %s' % uid).fetchone()
 		else:
 			return "bad image"
 

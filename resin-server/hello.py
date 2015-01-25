@@ -21,7 +21,7 @@ def sendImageToServer(img):
         ret, jpeg = cv2.imencode('.jpg', img)
         jpeg_body = jpeg.tostring()
 
-        url = 'http://10.100.83.132:4454/img'
+        url = 'http://10.100.83.164:4454/img'
         req = urllib2.Request(url, jpeg_body)
         response = urllib2.urlopen(req)
         result = response.read()
@@ -97,7 +97,7 @@ pygame.mouse.set_visible(False)
 fontpath = pygame.font.match_font('dejavusansmono')
 # set up 2 sizes
 font = pygame.font.Font(fontpath, 20)
-fontSm = pygame.font.Font(fontpath, 18)
+fontLg = pygame.font.Font(fontpath, 35)
 
 print('inited')
 
@@ -157,12 +157,23 @@ def main(camera):
         msg = 'sending image to server'
         mytft.screen.blit(font.render(msg, True, colourWhite), (40, 40))
         pygame.display.update()
-        print(msg)
-        text = sendImageToServer(biggestFaceImg)
-        mytft.screen.blit(font.render('%s' % text, True, colourWhite), (100, 100))
-        pygame.display.update()
-        print('got response!')
 
+        print(msg)
+
+        mytft.screen.fill((0,0,0))
+
+        text = sendImageToServer(biggestFaceImg)
+
+        mytft.screen.blit(opencv_to_surface(biggestFaceImg), (150, 50))
+
+        mytft.screen.blit(fontLg.render('Hi %s!' % text, True, colourWhite), (20, 60))
+        mytft.screen.blit(fontLg.render('Registered your rubbish!', True, colourWhite), (20, 160))
+
+
+        pygame.display.update()
+
+    if (not ISPIE):
+        time.sleep(1)
         #text_surface = font.render(text, True, colourWhite)
         #mytft.screen.blit(text_surface, (0, 50))
 
