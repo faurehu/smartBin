@@ -163,8 +163,8 @@ def main(camera):
         pygame.display.update()
         print('got response!')
 
-        text_surface = font.render(text, True, colourWhite)
-        mytft.screen.blit(text_surface, (0, 50))
+        #text_surface = font.render(text, True, colourWhite)
+        #mytft.screen.blit(text_surface, (0, 50))
 
 
     for event in pygame.event.get():
