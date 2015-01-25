@@ -3,11 +3,12 @@ import db
 add_cmds = '''
   CREATE TABLE IF NOT EXISTS `users` (
     `id` int unsigned auto_increment primary key,
-    `name` varchar(255) not null,
+    `name` varchar(255) not null unique,
     `created` timestamp not null default current_timestamp
   );
   CREATE TABLE IF NOT EXISTS `user_images` (
     `id` int unsigned auto_increment primary key,
+    `user_id` int unsigned not null,
     img longblob not null,
     created timestamp not null default current_timestamp
   );
